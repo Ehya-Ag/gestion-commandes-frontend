@@ -1,10 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-// Importation des composants
-import Customer from "../components/Customer.vue";
-import Product from "../components/Product.vue";
-import PurchaseOrder from "../components/PurchaseOrder.vue";
-import NotFound from "../components/NotFound.vue"; // Assurez-vous que ce fichier existe
+import Customer from "../components/customer/Customer.vue";
+import Product from "../components/product/Product.vue";
+import PurchaseOrder from "../components/purchaseOrder/PurchaseOrder.vue";
+import NotFound from "../components/NotFound.vue";
 
 const routes = [
     // {
