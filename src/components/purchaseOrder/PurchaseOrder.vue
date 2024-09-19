@@ -1,9 +1,9 @@
 <template>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
   <div class="container mt-5 mb-4 pt-4">
     <h3 class="text-start">List of Orders</h3>
     <div class="col-12 d-flex justify-content-end">
-     <button class="btn btn-primary mb-3 ext-end" @click="goToAddOrder">Add New Order</button>   
+      <button class="btn btn-primary mb-3 ext-end" @click="goToAddOrder">Add New Order</button>   
     </div>
     <table class="table table-bordered table-striped">
       <thead>
@@ -24,25 +24,28 @@
           <td>{{ order.trackNumber }}</td>
           <td>{{ order.orderStatus }}</td>
           <td>
-            <button class="btn btn-warning btn-sm me-2" @click="ouvrirModalModification(produit)" data-bs-toggle="modal" data-bs-target="#productModal">
-                                    <i class="bi bi-pencil"></i>
-                                </button>
-                                <button class="btn btn-info btn-sm me-2">
-                                    <i class="bi bi-eye"></i>
-                                </button>
-                                <button class="btn btn-danger btn-sm" @click="supprimerProduit(produit)">
-                                    <i class="bi bi-trash"></i>
-                                </button>
+            <button class="btn btn-warning btn-sm me-2" @click="ouvrirModalModification(order)">
+              <i class="bi bi-pencil"></i>
+            </button>
+            <button class="btn btn-info btn-sm me-2" @click="openDetailsModal(order)" data-bs-toggle="modal" data-bs-target="#detailsOrderModal">
+              <i class="bi bi-eye"></i>
+            </button>
+            <button class="btn btn-danger btn-sm" @click="confirmDelete(order)">
+              <i class="bi bi-trash"></i>
+            </button>
           </td>
         </tr>
       </tbody>
     </table>
+
+    <DetailsOrder :order="selectedOrder" :product="selectedProduct" />
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import DetailsOrder from './DetailOrder.vue';
 
 const router = useRouter();
 
@@ -54,6 +57,13 @@ const orders = ref([
     deliveryAddress: '123 Main St, New York, NY',
     trackNumber: 'TN001',
     orderStatus: 'Shipped',
+    product: {
+      name: 'Ordinateur Portable',
+      price: 1200,
+      description: 'Ordinateur portable haut de gamme avec écran 15 pouces.',
+      quantity: 5,
+      category: 'Informatique'
+    }
   },
   {
     id: 2,
@@ -62,11 +72,44 @@ const orders = ref([
     deliveryAddress: '456 Oak Ave, San Francisco, CA',
     trackNumber: 'TN002',
     orderStatus: 'Delivered',
-  },
+    product: {
+      name: 'Smartphone',
+      price: 800,
+      description: 'Smartphone dernière génération avec caméra haute résolution.',
+      quantity: 15,
+      category: 'Électronique'
+    }
+  }
 ]);
+
+const selectedOrder = ref(null);
+const selectedProduct = ref(null);
 
 const goToAddOrder = () => {
   router.push({ name: 'add-order' });
+};
+
+const openDetailsModal = (order) => {
+  selectedOrder.value = order;
+  selectedProduct.value = order.product;
+};
+
+const ouvrirModalModification = (order) => {
+  console.log('Modification order:', order);
+};
+
+const supprimerProduit = (order) => {
+  const index = orders.value.findIndex(o => o.id === order.id);
+  if (index !== -1) {
+    orders.value.splice(index, 1);
+    console.log('Order deleted:', order);
+  }
+};
+
+const confirmDelete = (order) => {
+  if (confirm(`Are you sure you want to delete the order for ${order.customerName}?`)) {
+    supprimerProduit(order);
+  }
 };
 </script>
 

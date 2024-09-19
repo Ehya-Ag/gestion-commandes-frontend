@@ -174,7 +174,7 @@ export default {
             }
         },
         supprimerProduit(produit) {
-            if (confirm(`Êtes-vous sûr de vouloir supprimer ${produit.nom} ?`)) {
+            if (confirm(`Are you sure you want to delete  ${produit.nom} ?`)) {
                 this.produits = this.produits.filter(p => p.codeBarres !== produit.codeBarres);
             }
         },
