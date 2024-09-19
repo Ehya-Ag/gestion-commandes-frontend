@@ -83,7 +83,7 @@
           </tbody>
         </table>
         <div class="d-flex justify-content-start">
-          <button type="button" @click="addDetail" class="btn btn-success">Update new detail</button>
+          <button type="button" @click="addDetail" class="btn btn-success">Add new detail</button>
         </div>
       </div>
     </div>

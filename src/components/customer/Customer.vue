@@ -81,82 +81,88 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      modeAffichage: 'edit',
-      estEnModeModification: false,
-      indexClientAModifier: null,
-      nouveauClient: {
-        nom: "",
-        adresse: "",
-        email: "",
-        telephone: "",
-      },
-      clients: [
-        { nom: "John Doe", adresse: "123 Main St, New York, NY", email: "johndoe@example.com", telephone: "123-456-7890" },
-        { nom: "Johny Frappe", adresse: "123 Main St, New York, NY", email: "johndoe@example5.com", telephone: "123-456-7890" },
-        { nom: "John Wike", adresse: "123 Main St, New York, NY", email: "johndoe@example2.com", telephone: "123-456-7890" },
-      ],
-    };
-  },
-  methods: {
-    ouvrirModalAjout() {
-      this.modeAffichage = 'edit';
-      this.estEnModeModification = false;
-      this.nouveauClient = { nom: "", adresse: "", email: "", telephone: "" };
-    },
-    ouvrirModalModification(client) {
-      this.modeAffichage = 'edit';
-      this.estEnModeModification = true;
-      this.indexClientAModifier = this.clients.indexOf(client);
-      this.nouveauClient = { ...client };
-    },
-    ouvrirModalDetails(client) {
-      this.modeAffichage = 'view';
-      this.nouveauClient = { ...client };
-    },
-    submitForm() {
-      if (this.modeAffichage === 'view') {
-        this.closeModal();
-        return;
-      }
-      if (this.estEnModeModification) {
-        this.modifierClient();
-      } else {
-        this.ajouterClient();
-      }
-    },
-    ajouterClient() {
-      if (this.nouveauClient.nom && this.nouveauClient.adresse && this.nouveauClient.email && this.nouveauClient.telephone) {
-        this.clients.push({ ...this.nouveauClient });
+<script setup>
+import { ref } from 'vue';
 
-        this.reinitialiserFormulaire();
-      }
-    },
-    modifierClient() {
-      if (this.nouveauClient.nom && this.nouveauClient.adresse && this.nouveauClient.email && this.nouveauClient.telephone) {
-        this.clients[this.indexClientAModifier] = { ...this.nouveauClient };
-        this.reinitialiserFormulaire();
-      }
-    },
-    supprimerClient(client) {
-      if (confirm(`Are you sure you want to delete ${client.nom}?`)) {
-        this.clients = this.clients.filter(c => c.email !== client.email);
-      }
-    },
-    reinitialiserFormulaire() {
-      this.nouveauClient = { nom: "", adresse: "", email: "", telephone: "" };
-      this.closeModal();
-    },
-    closeModal() {
-      const modalElement = document.getElementById('clientModal');
-      const modal = bootstrap.Modal.getInstance(modalElement);
-      modal.hide();
-    }
-  },
-};
+// Define reactive variables
+const modeAffichage = ref('edit');
+const estEnModeModification = ref(false);
+const indexClientAModifier = ref(null);
+const nouveauClient = ref({
+  nom: "",
+  adresse: "",
+  email: "",
+  telephone: "",
+});
+
+// Initialize the client list
+const clients = ref([
+  { nom: "John Doe", adresse: "123 Main St, New York, NY", email: "johndoe@example.com", telephone: "123-456-7890" },
+  { nom: "Johny Frappe", adresse: "123 Main St, New York, NY", email: "johndoe@example5.com", telephone: "123-456-7890" },
+  { nom: "John Wike", adresse: "123 Main St, New York, NY", email: "johndoe@example2.com", telephone: "123-456-7890" },
+]);
+
+// Define methods
+function ouvrirModalAjout() {
+  modeAffichage.value = 'edit';
+  estEnModeModification.value = false;
+  nouveauClient.value = { nom: "", adresse: "", email: "", telephone: "" };
+}
+
+function ouvrirModalModification(client) {
+  modeAffichage.value = 'edit';
+  estEnModeModification.value = true;
+  indexClientAModifier.value = clients.value.indexOf(client);
+  nouveauClient.value = { ...client };
+}
+
+function ouvrirModalDetails(client) {
+  modeAffichage.value = 'view';
+  nouveauClient.value = { ...client };
+}
+
+function submitForm() {
+  if (modeAffichage.value === 'view') {
+    closeModal();
+    return;
+  }
+  if (estEnModeModification.value) {
+    modifierClient();
+  } else {
+    ajouterClient();
+  }
+}
+
+function ajouterClient() {
+  if (nouveauClient.value.nom && nouveauClient.value.adresse && nouveauClient.value.email && nouveauClient.value.telephone) {
+    clients.value.push({ ...nouveauClient.value });
+    reinitialiserFormulaire();
+  }
+}
+
+function modifierClient() {
+  if (nouveauClient.value.nom && nouveauClient.value.adresse && nouveauClient.value.email && nouveauClient.value.telephone) {
+    clients.value[indexClientAModifier.value] = { ...nouveauClient.value };
+    reinitialiserFormulaire();
+  }
+}
+
+function supprimerClient(client) {
+  if (confirm(`Are you sure you want to delete ${client.nom}?`)) {
+    clients.value = clients.value.filter(c => c.email !== client.email);
+  }
+}
+
+function reinitialiserFormulaire() {
+  nouveauClient.value = { nom: "", adresse: "", email: "", telephone: "" };
+  closeModal();
+}
+
+function closeModal() {
+  const modalElement = document.getElementById('clientModal');
+  const modal = bootstrap.Modal.getInstance(modalElement);
+  modal.hide();
+}
 </script>
 
 <style scoped>
