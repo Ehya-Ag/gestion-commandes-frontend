@@ -1,5 +1,45 @@
-# Vue 3 + Vite
+# gestion-commandes-frontend
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## Description
+Ce projet représente le frontend dynamique d'une application dédiée à la gestion et à l'affichage des commandes, des clients et des produits. 
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+## Technologies Utilisées
+- Vue.js 3 : Framework frontend pour la création d'applications dynamiques.
+- Bootstrap 5 : Framework CSS pour le style et la réactivité.
+- Font Awesome 6 : Pour les icônes et les éléments visuels.
+- Vue Router : Pour la navigation entre les pages.
+## Prérequis
+Assurez-vous d'avoir les éléments suivants installés sur votre machine :
+
+[Node.js](https://nodejs.org/fr)
+
+[npm](https://www.npmjs.com/)
+
+[Vue CLI](https://cli.vuejs.org/)
+## Fonctionnalités
+### Gestion des Commandes
+### Gestion des Clients
+### Gestion des produits
+
+## Prise en Main du Projet
+Clonez le Dépôt
+```
+git clone https://github.com/Ehya-Ag/gestion-commandes-frontend.git
+```
+```
+cd gestion-commandes-frontend
+```
+
+## Installez les Dépendances
+
+```
+npm install
+```
+Lancez l'Application
+
+```
+npm run dev
+```
+
+## Auteur
+[Ehya-Ag](https://github.com/Ehya-Ag/)
