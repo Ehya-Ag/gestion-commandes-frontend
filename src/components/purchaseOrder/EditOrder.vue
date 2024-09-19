@@ -2,7 +2,7 @@
     <div class="container mt-4">
       <div class="d-flex justify-content-end">
       <button @click="goToOrderList" class="btn btn-secondary me-4">Orders List</button>
-      <button @click="submitOrder" class="btn btn-primary">Submit</button>
+      <button @click="submitOrder" class="btn btn-primary">Update</button>
     </div>
       <form @submit.prevent="submitOrder" class="">
         <div class="row">
@@ -83,7 +83,7 @@
           </tbody>
         </table>
         <div class="d-flex justify-content-start">
-          <button type="button" @click="addDetail" class="btn btn-success">Add new detail</button>
+          <button type="button" @click="addDetail" class="btn btn-success">Update new detail</button>
         </div>
       </div>
     </div>

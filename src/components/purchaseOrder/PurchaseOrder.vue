@@ -1,6 +1,6 @@
 <template>
-   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
-  <div class="container mt-5 mb-4 pt-4">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+  <div class="container mb-4 ">
     <h3 class="text-start">List of Orders</h3>
     <div class="col-12 d-flex justify-content-end">
       <button class="btn btn-primary mb-3 ext-end" @click="goToAddOrder">Add New Order</button>   
@@ -24,14 +24,14 @@
           <td>{{ order.trackNumber }}</td>
           <td>{{ order.orderStatus }}</td>
           <td>
-            <button class="btn btn-warning btn-sm me-2" @click="ouvrirModalModification(order)">
-              <i class="bi bi-pencil"></i>
+            <button class="btn btn-link btn-sm me-2" @click="ouvrirModalModification(order)">
+              <i class="fa fa-pen-to-square" style="color: gold;"></i>
             </button>
-            <button class="btn btn-info btn-sm me-2" @click="openDetailsModal(order)" data-bs-toggle="modal" data-bs-target="#detailsOrderModal">
-              <i class="bi bi-eye"></i>
+            <button class="btn btn-link btn-sm me-2" @click="openDetailsModal(order)" data-bs-toggle="modal" data-bs-target="#detailsOrderModal">
+              <i class="fa fa-eye" style="color: blue;"></i>
             </button>
-            <button class="btn btn-danger btn-sm" @click="confirmDelete(order)">
-              <i class="bi bi-trash"></i>
+            <button class="btn btn-link btn-sm" @click="confirmDelete(order)">
+              <i class="fa fa-trash" style="color: red;"></i>
             </button>
           </td>
         </tr>
@@ -89,13 +89,14 @@ const goToAddOrder = () => {
   router.push({ name: 'add-order' });
 };
 
+// Redirection vers la page d'édition de la commande
+const ouvrirModalModification = (order) => {
+  router.push({ name: 'edit-order', params: { id: order.id } });
+};
+
 const openDetailsModal = (order) => {
   selectedOrder.value = order;
   selectedProduct.value = order.product;
-};
-
-const ouvrirModalModification = (order) => {
-  console.log('Modification order:', order);
 };
 
 const supprimerProduit = (order) => {

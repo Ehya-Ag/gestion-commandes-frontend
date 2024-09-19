@@ -4,6 +4,7 @@ import Customer from "../components/customer/Customer.vue";
 import Product from "../components/product/Product.vue";
 import PurchaseOrder from "../components/purchaseOrder/PurchaseOrder.vue";
 import AddOrder from "../components/purchaseOrder/AddOrder.vue";
+import EditOrder from "../components/purchaseOrder/EditOrder.vue";
 import NotFound from "../components/NotFound.vue";
 
 const routes = [
@@ -32,6 +33,9 @@ const routes = [
         name: "add-order",
         component: AddOrder
     },
+    {   path: "/edit-order/:id", 
+        name: "edit-order", 
+        component: EditOrder },
     {
         path: "/:pathMatch(.*)*",
         name: "not-found",

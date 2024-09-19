@@ -60,14 +60,14 @@
               <td>{{ client.email }}</td>
               <td>{{ client.telephone }}</td>
               <td class="text-center">
-                <button class="btn btn-warning btn-sm me-2" @click="ouvrirModalModification(client)" data-bs-toggle="modal" data-bs-target="#clientModal">
-                  <i class="bi bi-pencil"></i>
+                <button class="btn btn-link btn-sm me-2" @click="ouvrirModalModification(client)" data-bs-toggle="modal" data-bs-target="#clientModal">
+                  <i class="fa fa-pen-to-square" style="color: gold;"></i>
                 </button>
-                <button class="btn btn-info btn-sm me-2" @click="ouvrirModalDetails(client)" data-bs-toggle="modal" data-bs-target="#clientModal">
-                  <i class="bi bi-eye"></i>
+                <button class="btn btn-link btn-sm me-2" @click="ouvrirModalDetails(client)" data-bs-toggle="modal" data-bs-target="#clientModal">
+                  <i class="fa fa-eye" style="color: blue;"></i>
                 </button>
-                <button class="btn btn-danger btn-sm" @click="supprimerClient(client)">
-                  <i class="bi bi-trash"></i>
+                <button class="btn btn-link btn-sm" @click="supprimerClient(client)">
+                  <i class="fa fa-trash" style="color: red;"></i>
                 </button>
               </td>
             </tr>
