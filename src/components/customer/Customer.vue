@@ -20,7 +20,7 @@
           <div class="modal-body">
             <form @submit.prevent="submitForm">
               <div class="mb-3">
-                <label for="name" class="form-label">Name</label>
+                <label for="name" class="form-label">Customer Name</label>
                 <input type="text" class="form-control" id="name" v-model="nouveauClient.nom" :readonly="modeAffichage === 'view'" :class="{ 'bg-light': modeAffichage === 'view' }" required />
               </div>
               <div class="mb-3">
@@ -35,7 +35,10 @@
                 <label for="phone" class="form-label">Phone</label>
                 <input type="tel" class="form-control" id="phone" v-model="nouveauClient.telephone" :readonly="modeAffichage === 'view'" :class="{ 'bg-light': modeAffichage === 'view' }" required />
               </div>
-              <button type="submit" class="btn btn-primary" v-if="modeAffichage !== 'view'">{{ estEnModeModification ? 'Modifier' : 'Ajouter' }}</button>
+              <div class="text-end">
+                <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary " v-if="modeAffichage !== 'view'">{{ estEnModeModification ? 'Confirm' : 'Confirm' }}</button>
+              </div>
             </form>
           </div>
         </div>

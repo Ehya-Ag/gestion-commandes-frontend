@@ -9,17 +9,17 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <RouterLink class="nav-link" to="/clients">
+              <RouterLink class="nav-link" to="/clients" active-class="active">
                 <i class="fas fa-users"></i> Customer
               </RouterLink>
             </li>
             <li class="nav-item">
-              <RouterLink class="nav-link" to="/produits">
+              <RouterLink class="nav-link" to="/produits" active-class="active">
                 <i class="fas fa-box-open"></i> Product
               </RouterLink>
             </li>
             <li class="nav-item">
-              <RouterLink class="nav-link" to="/bon_de_commande">
+              <RouterLink class="nav-link" to="/bon_de_commande" active-class="active">
                 <i class="fas fa-cart-shopping"></i> Order
               </RouterLink>
             </li>
@@ -39,9 +39,9 @@ export default {
 };
 </script>
 
-<style>
-main {
-  margin-top: 20px;
+<style scoped>
+.navbar-nav .nav-link.active i {
+  color: blue;
 }
 
 .navbar-nav .nav-link {
