@@ -1,11 +1,13 @@
 <template>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
+ 
   <div>
-    <button type="button" class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target="#clientModal" @click="ouvrirModalAjout">
-      Ajouter un client
+    <h3>List of Customers</h3>
+    <div class="text-end">
+      <button type="button" class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target="#clientModal" @click="ouvrirModalAjout">
+      Add new customer
     </button>
+    </div>
     <div class="modal fade" id="clientModal" tabindex="-1" aria-labelledby="clientModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -16,11 +18,11 @@
           <div class="modal-body">
             <form @submit.prevent="estEnModeModification ? modifierClient() : ajouterClient()">
               <div class="mb-3">
-                <label for="name" class="form-label">Nom</label>
+                <label for="name" class="form-label">Name</label>
                 <input type="text" class="form-control" id="name" v-model="nouveauClient.nom" required />
               </div>
               <div class="mb-3">
-                <label for="address" class="form-label">Adresse</label>
+                <label for="address" class="form-label">Address</label>
                 <input type="text" class="form-control" id="address" v-model="nouveauClient.adresse" required />
               </div>
               <div class="mb-3">
@@ -28,7 +30,7 @@
                 <input type="email" class="form-control" id="email" v-model="nouveauClient.email" required />
               </div>
               <div class="mb-3">
-                <label for="phone" class="form-label">Téléphone</label>
+                <label for="phone" class="form-label">Phone</label>
                 <input type="tel" class="form-control" id="phone" v-model="nouveauClient.telephone" required />
               </div>
               <button type="submit" class="btn btn-primary">{{ estEnModeModification ? 'Modifier' : 'Ajouter' }}</button>
@@ -42,10 +44,10 @@
         <table class="table table-striped table-bordered">
           <thead>
             <tr>
-              <th>Nom</th>
-              <th>Adresse</th>
+              <th>Name</th>
+              <th>Address</th>
               <th>Email</th>
-              <th>Téléphone</th>
+              <th>Phone</th>
               <th class="text-center">Actions</th>
             </tr>
           </thead>
