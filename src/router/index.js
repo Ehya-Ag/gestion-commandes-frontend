@@ -5,16 +5,17 @@ import Product from "../components/product/Product.vue";
 import PurchaseOrder from "../components/purchaseOrder/PurchaseOrder.vue";
 import AddOrder from "../components/purchaseOrder/AddOrder.vue";
 import EditOrder from "../components/purchaseOrder/EditOrder.vue";
+import Home from "../components/Home.vue";
 import NotFound from "../components/NotFound.vue";
 
 const routes = [
-    // {
-    //     path: "/",
-    //     name: "home",
-    //     component: Home
-    // },
     {
         path: "/",
+        name: "home",
+        component: Home
+    },
+    {
+        path: "/clients",
         name: "clients",
         component: Customer
     },
