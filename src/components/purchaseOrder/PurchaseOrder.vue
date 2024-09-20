@@ -26,7 +26,7 @@
             <button class="btn btn-link btn-sm me-2" @click="openEditModal(order)">
               <i class="fa fa-pen-to-square" style="color: gold;"></i>
             </button>
-            <button class="btn btn-link btn-sm me-2" @click="openDetailsModal(order)" data-bs-toggle="modal" data-bs-target="#detailsOrderModal">
+            <button class="btn btn-link btn-sm me-2" @click="goToDetails(order.id)">
               <i class="fa fa-eye" style="color: blue;"></i>
             </button>
             <button class="btn btn-link btn-sm" @click="confirmDelete(order)">
@@ -36,15 +36,13 @@
         </tr>
       </tbody>
     </table>
-
-    <DetailsOrder :order="selectedOrder" :product="selectedProduct" />
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import DetailsOrder from './DetailOrder.vue';
+
 
 const router = useRouter();
 
@@ -81,8 +79,7 @@ const orders = ref([
   }
 ]);
 
-const selectedOrder = ref(null);
-const selectedProduct = ref(null);
+
 
 const goToAddOrder = () => {
   router.push({ name: 'add-order' });
@@ -92,9 +89,13 @@ const openEditModal = (order) => {
   router.push({ name: 'edit-order', params: { id: order.id } });
 };
 
-const openDetailsModal = (order) => {
-  selectedOrder.value = order;
-  selectedProduct.value = order.product;
+const goToDetails = (orderId) => {
+  router.push({ name: 'order-detail', params: { id: orderId } });
+};
+const confirmDelete = (order) => {
+  if (confirm(`Are you sure you want to delete the order for ${order.customerName}?`)) {
+    deleteOrder(order);
+  }
 };
 
 const deleteOrder = (order) => {
@@ -104,16 +105,4 @@ const deleteOrder = (order) => {
     console.log('Order deleted:', order);
   }
 };
-
-const confirmDelete = (order) => {
-  if (confirm(`Are you sure you want to delete the order for ${order.customerName}?`)) {
-    deleteOrder(order);
-  }
-};
 </script>
-
-<style scoped>
-h2 {
-  margin-bottom: 20px;
-}
-</style>

@@ -17,30 +17,30 @@ const routes = [
         component: Home
     },
     {
-        path: "/clients",
-        name: "clients",
+        path: "/customer",
+        name: "customer",
         component: Customer
     },
     {
-        path: "/produits",
-        name: "produits",
+        path: "/product",
+        name: "product",
         component: Product
     },
     {
-        path: "/bon_de_commande",
-        name: "bon-de-commande",
+        path: "/order",
+        name: "order",
         component: PurchaseOrder
     },
     {
-        path: "/AddOrder",
+        path: "/order/add-order",
         name: "add-order",
         component: AddOrder
     },
-    {   path: "/edit-order/:id", 
+    {   path: "/order/edit-order/:id", 
         name: "edit-order", 
         component: EditOrder },
     {
-        path: '/order-detail/:id',
+        path: '/order/order-detail/:id',
         name: 'order-detail',
         component: OrderDetail, 
     },

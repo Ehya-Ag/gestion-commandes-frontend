@@ -1,5 +1,4 @@
 <template>
-  
   <div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container">
@@ -9,17 +8,17 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <RouterLink class="nav-link" to="/clients" active-class="active">
+              <RouterLink class="nav-link" to="/customer" active-class="active">
                 <i class="fas fa-users"></i> Customer
               </RouterLink>
             </li>
             <li class="nav-item">
-              <RouterLink class="nav-link" to="/produits" active-class="active">
+              <RouterLink class="nav-link" to="/product" active-class="active">
                 <i class="fas fa-box-open"></i> Product
               </RouterLink>
             </li>
             <li class="nav-item">
-              <RouterLink class="nav-link" to="/bon_de_commande" active-class="active">
+              <RouterLink class="nav-link" to="/order" active-class="active">
                 <i class="fas fa-cart-shopping"></i> Order
               </RouterLink>
             </li>
