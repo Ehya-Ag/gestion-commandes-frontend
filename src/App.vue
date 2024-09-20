@@ -57,7 +57,7 @@
 
 <script setup>
 import { ref } from 'vue';
-const activeRoute = ref('customer'); 
+const activeRoute = ref(''); 
 const setActiveRoute = (route) => {
 activeRoute.value = route;
 };
