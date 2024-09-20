@@ -1,5 +1,4 @@
 <template>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
   
   <div>
     <h3>List of Customers</h3>

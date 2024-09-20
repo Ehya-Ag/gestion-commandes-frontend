@@ -1,5 +1,4 @@
 <template>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
   <div class="container mb-4">
     <h3 class="text-start">List of Orders</h3>
     <div class="col-12 d-flex justify-content-end">

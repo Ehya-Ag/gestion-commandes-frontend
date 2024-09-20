@@ -1,6 +1,4 @@
 <template>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
-
     <div>
         <h3 class="text-start">List of Products</h3>
         <div class="text-end mb-4">
