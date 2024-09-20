@@ -4,16 +4,16 @@
   <div>
     <h3>List of Customers</h3>
     <div class="text-end">
-      <button type="button" class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target="#clientModal" @click="ouvrirModalAjout">
+      <button type="button" class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target="#customerModal" @click="openAddModal">
         Add new customer
       </button>
     </div>
-    <div class="modal fade" id="clientModal" tabindex="-1" aria-labelledby="clientModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-sm"> <!-- Smaller and centered modal -->
+    <div class="modal fade" id="customerModal" tabindex="-1" aria-labelledby="customerModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-sm">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="clientModalLabel">
-              {{ modeAffichage === 'view' ? 'Détails du client' : estEnModeModification ? 'Modifier le client' : 'Ajouter un client' }}
+            <h5 class="modal-title" id="customerModalLabel">
+              {{ displayMode === 'view' ? 'Customer Details' : isEditMode ? 'Edit Customer' : 'Add Customer' }}
             </h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
@@ -21,23 +21,23 @@
             <form @submit.prevent="submitForm">
               <div class="mb-3">
                 <label for="name" class="form-label">Customer Name</label>
-                <input type="text" class="form-control" id="name" v-model="nouveauClient.nom" :readonly="modeAffichage === 'view'" :class="{ 'bg-light': modeAffichage === 'view' }" required />
+                <input type="text" class="form-control" id="name" v-model="newCustomer.name" :readonly="displayMode === 'view'" :class="{ 'bg-light': displayMode === 'view' }" required />
               </div>
               <div class="mb-3">
                 <label for="address" class="form-label">Address</label>
-                <input type="text" class="form-control" id="address" v-model="nouveauClient.adresse" :readonly="modeAffichage === 'view'" :class="{ 'bg-light': modeAffichage === 'view' }" required />
+                <input type="text" class="form-control" id="address" v-model="newCustomer.address" :readonly="displayMode === 'view'" :class="{ 'bg-light': displayMode === 'view' }" required />
               </div>
               <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" v-model="nouveauClient.email" :readonly="modeAffichage === 'view'" :class="{ 'bg-light': modeAffichage === 'view' }" required />
+                <input type="email" class="form-control" id="email" v-model="newCustomer.email" :readonly="displayMode === 'view'" :class="{ 'bg-light': displayMode === 'view' }" required />
               </div>
               <div class="mb-3">
                 <label for="phone" class="form-label">Phone</label>
-                <input type="tel" class="form-control" id="phone" v-model="nouveauClient.telephone" :readonly="modeAffichage === 'view'" :class="{ 'bg-light': modeAffichage === 'view' }" required />
+                <input type="tel" class="form-control" id="phone" v-model="newCustomer.phone" :readonly="displayMode === 'view'" :class="{ 'bg-light': displayMode === 'view' }" required />
               </div>
               <div class="text-end">
                 <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary " v-if="modeAffichage !== 'view'">{{ estEnModeModification ? 'Confirm' : 'Confirm' }}</button>
+                <button type="submit" class="btn btn-primary" v-if="displayMode !== 'view'">{{ isEditMode ? 'Confirm' : 'Confirm' }}</button>
               </div>
             </form>
           </div>
@@ -57,19 +57,19 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="client in clients" :key="client.email">
-              <td>{{ client.nom }}</td>
-              <td>{{ client.adresse }}</td>
-              <td>{{ client.email }}</td>
-              <td>{{ client.telephone }}</td>
+            <tr v-for="customer in customers" :key="customer.email">
+              <td>{{ customer.name }}</td>
+              <td>{{ customer.address }}</td>
+              <td>{{ customer.email }}</td>
+              <td>{{ customer.phone }}</td>
               <td class="text-center">
-                <button class="btn btn-link btn-sm me-2" @click="ouvrirModalModification(client)" data-bs-toggle="modal" data-bs-target="#clientModal">
+                <button class="btn btn-link btn-sm me-2" @click="openEditModal(customer)" data-bs-toggle="modal" data-bs-target="#customerModal">
                   <i class="fa fa-pen-to-square" style="color: gold;"></i>
                 </button>
-                <button class="btn btn-link btn-sm me-2" @click="ouvrirModalDetails(client)" data-bs-toggle="modal" data-bs-target="#clientModal">
+                <button class="btn btn-link btn-sm me-2" @click="openDetailModal(customer)" data-bs-toggle="modal" data-bs-target="#customerModal">
                   <i class="fa fa-eye" style="color: blue;"></i>
                 </button>
-                <button class="btn btn-link btn-sm" @click="supprimerClient(client)">
+                <button class="btn btn-link btn-sm" @click="deleteCustomer(customer)">
                   <i class="fa fa-trash" style="color: red;"></i>
                 </button>
               </td>
@@ -84,82 +84,79 @@
 <script setup>
 import { ref } from 'vue';
 
-// Define reactive variables
-const modeAffichage = ref('edit');
-const estEnModeModification = ref(false);
-const indexClientAModifier = ref(null);
-const nouveauClient = ref({
-  nom: "",
-  adresse: "",
+const displayMode = ref('edit');
+const isEditMode = ref(false);
+const customerToEditIndex = ref(null);
+const newCustomer = ref({
+  name: "",
+  address: "",
   email: "",
-  telephone: "",
+  phone: "",
 });
 
-// Initialize the client list
-const clients = ref([
-  { nom: "John Doe", adresse: "123 Main St, New York, NY", email: "johndoe@example.com", telephone: "123-456-7890" },
-  { nom: "Johny Frappe", adresse: "123 Main St, New York, NY", email: "johndoe@example5.com", telephone: "123-456-7890" },
-  { nom: "John Wike", adresse: "123 Main St, New York, NY", email: "johndoe@example2.com", telephone: "123-456-7890" },
+const customers = ref([
+  { name: "John Doe", address: "123 Main St, New York, NY", email: "johndoe@example.com", phone: "123-456-7890" },
+  { name: "Johny Frappe", address: "123 Main St, New York, NY", email: "johndoe@example5.com", phone: "123-456-7890" },
+  { name: "John Wike", address: "123 Main St, New York, NY", email: "johndoe@example2.com", phone: "123-456-7890" },
 ]);
 
-// Define methods
-function ouvrirModalAjout() {
-  modeAffichage.value = 'edit';
-  estEnModeModification.value = false;
-  nouveauClient.value = { nom: "", adresse: "", email: "", telephone: "" };
+function openAddModal() {
+  displayMode.value = 'edit';
+  isEditMode.value = false;
+  newCustomer.value = { name: "", address: "", email: "", phone: "" };
 }
 
-function ouvrirModalModification(client) {
-  modeAffichage.value = 'edit';
-  estEnModeModification.value = true;
-  indexClientAModifier.value = clients.value.indexOf(client);
-  nouveauClient.value = { ...client };
+function openEditModal(customer) {
+  displayMode.value = 'edit';
+  isEditMode.value = true;
+  customerToEditIndex.value = customers.value.indexOf(customer);
+  newCustomer.value = { ...customer };
 }
 
-function ouvrirModalDetails(client) {
-  modeAffichage.value = 'view';
-  nouveauClient.value = { ...client };
+function openDetailModal(customer) {
+  displayMode.value = 'view';
+  newCustomer.value = { ...customer };
 }
 
 function submitForm() {
-  if (modeAffichage.value === 'view') {
+  if (displayMode.value === 'view') {
     closeModal();
     return;
   }
-  if (estEnModeModification.value) {
-    modifierClient();
+  if (isEditMode.value) {
+    editCustomer();
   } else {
-    ajouterClient();
+    addCustomer();
   }
 }
 
-function ajouterClient() {
-  if (nouveauClient.value.nom && nouveauClient.value.adresse && nouveauClient.value.email && nouveauClient.value.telephone) {
-    clients.value.push({ ...nouveauClient.value });
-    reinitialiserFormulaire();
+function addCustomer() {
+  if (newCustomer.value.name && newCustomer.value.address && newCustomer.value.email && newCustomer.value.phone) {
+    customers.value.push({ ...newCustomer.value });
+    resetForm();
   }
 }
 
-function modifierClient() {
-  if (nouveauClient.value.nom && nouveauClient.value.adresse && nouveauClient.value.email && nouveauClient.value.telephone) {
-    clients.value[indexClientAModifier.value] = { ...nouveauClient.value };
-    reinitialiserFormulaire();
+function editCustomer() {
+  if (newCustomer.value.name && newCustomer.value.address && newCustomer.value.email && newCustomer.value.phone) {
+    customers.value[customerToEditIndex.value] = { ...newCustomer.value };
+    resetForm();
   }
 }
 
-function supprimerClient(client) {
-  if (confirm(`Are you sure you want to delete ${client.nom}?`)) {
-    clients.value = clients.value.filter(c => c.email !== client.email);
+function deleteCustomer(customer) {
+  if (confirm(`Are you sure you want to delete ${customer.name}?`)) {
+    customers.value = customers.value.filter(c => c.email !== customer.email);
   }
 }
 
-function reinitialiserFormulaire() {
-  nouveauClient.value = { nom: "", adresse: "", email: "", telephone: "" };
+function resetForm() {
+  newCustomer.value = { name: "", address: "", email: "", phone: "" };
   closeModal();
 }
 
 function closeModal() {
-  const modalElement = document.getElementById('clientModal');
+  const modalElement = document.getElementById('customerModal');
   const modal = bootstrap.Modal.getInstance(modalElement);
   modal.hide();
 }

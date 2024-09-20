@@ -1,4 +1,4 @@
-# gestion-commandes-frontend
+# Gestion des Commandes
 
 ## Description
 Ce projet représente le frontend dynamique d'une application dédiée à la gestion et à l'affichage des commandes, des clients et des produits. 
@@ -17,9 +17,9 @@ Assurez-vous d'avoir les éléments suivants installés sur votre machine :
 
 [Vue CLI](https://cli.vuejs.org/)
 ## Fonctionnalités
-### Gestion des Commandes
-### Gestion des Clients
-### Gestion des produits
+1. Gestion des Commandes
+2. Gestion des Clients
+3. Gestion des produits
 
 ## Prise en Main du Projet
 Clonez le Dépôt

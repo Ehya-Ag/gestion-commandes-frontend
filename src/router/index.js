@@ -5,6 +5,7 @@ import Product from "../components/product/Product.vue";
 import PurchaseOrder from "../components/purchaseOrder/PurchaseOrder.vue";
 import AddOrder from "../components/purchaseOrder/AddOrder.vue";
 import EditOrder from "../components/purchaseOrder/EditOrder.vue";
+import OrderDetail from "../components/purchaseOrder/DetailOrder.vue";
 import Home from "../components/Home.vue";
 import NotFound from "../components/NotFound.vue";
 
@@ -38,6 +39,12 @@ const routes = [
     {   path: "/edit-order/:id", 
         name: "edit-order", 
         component: EditOrder },
+    {
+        path: '/order-detail/:id',
+        name: 'order-detail',
+        component: OrderDetail, 
+    },
+          
     {
         path: "/:pathMatch(.*)*",
         name: "not-found",

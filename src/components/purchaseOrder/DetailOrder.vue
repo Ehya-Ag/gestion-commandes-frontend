@@ -70,22 +70,18 @@
       </div>
     </div>
   </template>
-  
-  <script>
-  export default {
-    name: "DetailsOrder",
-    props: {
-      order: {
-        type: Object,
-        required: true
-      },
-      product: {
-        type: Object,
-        required: true
-      }
+  <script setup>
+  const props = defineProps({
+    order: {
+      type: Object,
+      required: true
+    },
+    product: {
+      type: Object,
+      required: true
     }
-  };
-  </script>
+  });
+</script>
   
   <style scoped>
   .modal-body {

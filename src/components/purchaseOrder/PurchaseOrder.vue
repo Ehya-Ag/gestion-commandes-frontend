@@ -1,6 +1,6 @@
 <template>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
-  <div class="container mb-4 ">
+  <div class="container mb-4">
     <h3 class="text-start">List of Orders</h3>
     <div class="col-12 d-flex justify-content-end">
       <button class="btn btn-primary mb-3 ext-end" @click="goToAddOrder">Add New Order</button>   
@@ -24,7 +24,7 @@
           <td>{{ order.trackNumber }}</td>
           <td>{{ order.orderStatus }}</td>
           <td>
-            <button class="btn btn-link btn-sm me-2" @click="ouvrirModalModification(order)">
+            <button class="btn btn-link btn-sm me-2" @click="openEditModal(order)">
               <i class="fa fa-pen-to-square" style="color: gold;"></i>
             </button>
             <button class="btn btn-link btn-sm me-2" @click="openDetailsModal(order)" data-bs-toggle="modal" data-bs-target="#detailsOrderModal">
@@ -58,11 +58,11 @@ const orders = ref([
     trackNumber: 'TN001',
     orderStatus: 'Shipped',
     product: {
-      name: 'Ordinateur Portable',
+      name: 'Laptop',
       price: 1200,
-      description: 'Ordinateur portable haut de gamme avec écran 15 pouces.',
+      description: 'High-end laptop with a 15-inch screen.',
       quantity: 5,
-      category: 'Informatique'
+      category: 'Computers'
     }
   },
   {
@@ -75,9 +75,9 @@ const orders = ref([
     product: {
       name: 'Smartphone',
       price: 800,
-      description: 'Smartphone dernière génération avec caméra haute résolution.',
+      description: 'Latest generation smartphone with high-resolution camera.',
       quantity: 15,
-      category: 'Électronique'
+      category: 'Electronics'
     }
   }
 ]);
@@ -89,8 +89,7 @@ const goToAddOrder = () => {
   router.push({ name: 'add-order' });
 };
 
-// Redirection vers la page d'édition de la commande
-const ouvrirModalModification = (order) => {
+const openEditModal = (order) => {
   router.push({ name: 'edit-order', params: { id: order.id } });
 };
 
@@ -99,7 +98,7 @@ const openDetailsModal = (order) => {
   selectedProduct.value = order.product;
 };
 
-const supprimerProduit = (order) => {
+const deleteOrder = (order) => {
   const index = orders.value.findIndex(o => o.id === order.id);
   if (index !== -1) {
     orders.value.splice(index, 1);
@@ -109,7 +108,7 @@ const supprimerProduit = (order) => {
 
 const confirmDelete = (order) => {
   if (confirm(`Are you sure you want to delete the order for ${order.customerName}?`)) {
-    supprimerProduit(order);
+    deleteOrder(order);
   }
 };
 </script>
