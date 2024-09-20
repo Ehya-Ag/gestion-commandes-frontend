@@ -2,6 +2,9 @@
   <div class="container">
     <h3>Order Details</h3>
     <form>
+      <div class="d-flex justify-content-end">
+        <button class="btn btn-secondary mt-3" @click="goBack">Orders List</button>
+      </div>
       <fieldset disabled>
         <div v-if="order && product">
           <h4>Order Information</h4>
@@ -53,7 +56,6 @@
         </div>
       </fieldset>
     </form>
-    <button class="btn btn-secondary mt-3" @click="goBack">Back to Orders List</button>
   </div>
 </template>
 
