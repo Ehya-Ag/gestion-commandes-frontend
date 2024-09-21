@@ -4,7 +4,7 @@
       <button @click="goToOrderList" class="btn btn-secondary me-4">Orders List</button>
       <button @click="submitOrder" class="btn btn-primary" :disabled="order.details.length === 0">Update</button>
     </div>
-    <h3>Edit orders</h3>
+    <h3>Edit order</h3>
     <form @submit.prevent="submitOrder">
       <div class="row">
         <div class="col-md-6 mb-3">
@@ -37,7 +37,7 @@
         </div>
       </div>
     </form>
-    
+
     <h3>Order Details</h3>
     <div class="mt-5 border">
       <table class="table table-bordered table-striped">
