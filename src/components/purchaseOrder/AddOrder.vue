@@ -4,6 +4,7 @@
       <button @click="goToOrderList" class="btn btn-secondary me-4">Orders List</button>
       <button @click="submitOrder" class="btn btn-primary" :disabled="order.details.length === 0">Submit</button>
     </div>
+    <h3>Add orders</h3>
     <form @submit.prevent="submitOrder">
       <div class="row">
         <div class="col-md-6 mb-3">
@@ -22,14 +23,13 @@
         </div>
         <div class="col-md-6 mb-3">
           <label for="trackNumber" class="form-label">Track Number</label>
-          <input type="text" v-model="order.trackNumber" class="form-control" />
+          <input type="text" v-model="order.trackNumber" class="form-control" required />
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-6 mb-3"></div>
+      <div class="row justify-content-end">
         <div class="col-md-6 mb-3">
           <label for="orderStatus" class="form-label">Order Status</label>
-          <select v-model="order.orderStatus" class="form-select">
+          <select v-model="order.orderStatus" class="form-select" required>
             <option value="Processing">Processing</option>
             <option value="Shipped">Shipped</option>
             <option value="Delivered">Delivered</option>
@@ -37,7 +37,7 @@
         </div>
       </div>
     </form>
-    
+
     <h3>Order Details</h3>
     <div class="mt-5 border">
       <table class="table table-bordered table-striped">
@@ -52,7 +52,10 @@
         <tbody>
           <tr v-for="(detail, index) in order.details" :key="index">
             <td>
-              <input type="text" v-model="detail.product" class="form-control" />
+              <select v-model="detail.product" class="form-select">
+                <option value="">Select product</option>
+                <option v-for="product in products" :key="product.id" :value="product.name">{{ product.name }}</option>
+              </select>
             </td>
             <td>
               <input type="number" v-model.number="detail.quantity" min="1" class="form-control" />
@@ -61,12 +64,12 @@
               <input type="number" v-model.number="detail.price" min="0" class="form-control" />
             </td>
             <td>
-              <button type="button" @click="confirmRemoveDetail(index)" class="btn btn-danger btn-sm">Remove</button>
+              <button type="button" @click="removeDetail(index)" class="btn btn-danger btn-sm">Remove</button>
             </td>
           </tr>
           <tr>
             <td>
-              <select v-model="newDetail.product" class="form-select mb-2">
+              <select v-model="newDetail.product" class="form-select">
                 <option value="">Select product</option>
                 <option v-for="product in products" :key="product.id" :value="product.name">{{ product.name }}</option>
               </select>
@@ -78,7 +81,7 @@
               <input type="number" v-model.number="newDetail.price" min="0" class="form-control" />
             </td>
             <td>
-              <button type="button" @click="removeNewDetail()" class="btn btn-danger btn-sm">Remove</button>
+              <button type="button" @click="removeDetail()" class="btn btn-danger btn-sm">Remove</button>
             </td>
           </tr>
         </tbody>
@@ -111,28 +114,16 @@ const newDetail = ref({
   quantity: 1,
   price: 0,
 });
-
 const addDetail = () => {
-  if (newDetail.value.product && newDetail.value.quantity > 0 && newDetail.value.price >= 0) {
-    order.value.details.push({ ...newDetail.value });
-    newDetail.value = { product: '', quantity: 1, price: 0 }; 
-  }
-};
-const confirmRemoveDetail = (index) => {
-  if (order.value.details.length === 1) {
-    alert('You must have at least one order detail.');
-    return;
-  }
-  const confirmation = confirm('Are you sure you want to remove this detail?');
-  if (confirmation) {
-    removeDetail(index);
-  }
+  order.value.details.push({ ...newDetail.value });
+  newDetail.value = { product: '', quantity: 1, price: 0 };
 };
 const removeDetail = (index) => {
-  order.value.details.splice(index, 1);
-};
-const removeNewDetail = () => {
-  newDetail.value = { product: '', quantity: 1, price: 0 };
+  if (order.value.details.length > 0) {
+    order.value.details.splice(index, 1);
+  } else {
+    alert("At least one item must be present.");
+  }
 };
 const submitOrder = () => {
   if (order.value.details.length === 0) {
@@ -141,6 +132,8 @@ const submitOrder = () => {
   }
   console.log('Order submitted:', order.value);
 };
+
+// Redirection vers la liste des commandes
 const router = useRouter();
 const goToOrderList = () => {
   router.push({ name: 'order' });
