@@ -1,10 +1,10 @@
 <template>
   <div class="container mt-4">
+    <h3>Add order</h3>
     <div class="d-flex justify-content-end">
       <button @click="goToOrderList" class="btn btn-secondary me-4">Orders List</button>
       <button @click="submitOrder" class="btn btn-primary" :disabled="order.details.length === 0">Submit</button>
     </div>
-    <h3>Add order</h3>
     <form @submit.prevent="submitOrder">
       <div class="row">
         <div class="col-md-6 mb-3">
