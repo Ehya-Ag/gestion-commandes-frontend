@@ -24,8 +24,8 @@
               </div>
               <div class="mb-3">
                 <label for="address" class="form-label">Address</label>
-                <input type="text" class="form-control" id="address" v-model="newCustomer.address" :readonly="displayMode === 'view'" :class="{ 'bg-light': displayMode === 'view' }" required />
-              </div>
+                <textarea class="form-control" id="address" v-model="newCustomer.address" :readonly="displayMode === 'view'" :class="{ 'bg-light': displayMode === 'view' }" required ></textarea>
+                </div>
               <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
                 <input type="email" class="form-control" id="email" v-model="newCustomer.email" :readonly="displayMode === 'view'" :class="{ 'bg-light': displayMode === 'view' }" required />

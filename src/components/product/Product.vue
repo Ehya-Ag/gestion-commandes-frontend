@@ -33,11 +33,11 @@
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="price" class="form-label">Price</label>
-                                    <input type="number" class="form-control" id="price" v-model="newProduct.price" :readonly="displayMode === 'view'" :class="{ 'bg-light': displayMode === 'view' }" required />
+                                    <input type="number" step="0.01" min="0" class="form-control" id="price" v-model="newProduct.price" :readonly="displayMode === 'view'" :class="{ 'bg-light': displayMode === 'view' }" required />
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="stock" class="form-label">Stock</label>
-                                    <input type="number" class="form-control" id="stock" v-model="newProduct.stockQuantity" :readonly="displayMode === 'view'" :class="{ 'bg-light': displayMode === 'view' }" required />
+                                    <input type="number" min="0" class="form-control" id="stock" v-model="newProduct.stockQuantity" :readonly="displayMode === 'view'" :class="{ 'bg-light': displayMode === 'view' }" required />
                                 </div>
                             </div>
 
